@@ -98,28 +98,26 @@ toc
 
 %%%%%%%%%%%%%% QUAD
 
-x = input('enter value of X: ');
-y = input('enter value of Y: ');
-r = (max(x,y));Pk = 1  -r;
+x=0;
+r=6;
+k=0;
 
-check1 = 2*x +2;
-check2 = 2*y -2;%while y~=0%check1 ~= check2
-while y ~=  0
-    if Pk < 0
-        x = x+1;
-        Pk = Pk + 2*x +1;
-        check1 = 2*x +2;
-        check2 = 2*y -2;
+pk  = 1-r;
+
+plot(x,r,"*");
+
+while r ~=0
+    if pk < 0
+        pk = pk + 2*x + 1;
+        x = x +1;
+        k = k+1;
     else
         x = x+1;
-        y = y-1;
-        Pk = Pk + (2*x) -(2*y);
-        check1 = 2*x +2;
-        check2 = 2*y -2;
-    end%disp(check1)%disp(check2)
-    % 
-hold on
-plot(x,y, '*')
+        r = r-1;
+        pk =pk + 2*x - 2*r;
+    end
+    hold on
+    plot(x,r,"*")
 end
 hold off
 
