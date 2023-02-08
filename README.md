@@ -1,2 +1,0 @@
-# cg
-revision material
