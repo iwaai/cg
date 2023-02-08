@@ -1,0 +1,555 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% LAB 2 DDA
+
+
+%DDA
+
+matrix1 = [10,20];
+matrix2 = [80,40];
+
+deltax = matrix2(1,1) - matrix1(1,1);
+
+deltay = matrix2(1,2) - matrix1(1,2);
+
+if deltax > deltay
+    step = deltax
+else
+    step = deltay
+end
+
+Xinc = deltax/step
+Yinc = deltay/step
+
+x = matrix1(1,1)
+y = matrix1(1,2)
+plot(x,y)
+
+i = 0
+
+while i <= step
+    x = x + Xinc
+    y = y + Yinc
+
+    hold on 
+    plot(x,y,"*")
+
+    i = i+1
+end
+hold off
+
+
+
+
+
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% LAB 3 bresenham
+
+
+
+
+
+
+tic
+
+matrix1 = [20,10];
+matrix2 = [30,18];
+
+deltax = matrix2(1,1) - matrix1(1,1);
+
+deltay = matrix2(1,2) - matrix1(1,2);
+
+pk = 2*deltay - deltax;
+
+condition = deltax;
+
+i = 1;
+
+x = matrix1(1,1) + 1;
+y = matrix1(1,2) + 1;
+
+plot(x,y,"*")
+
+while i < condition
+    if pk < 0
+        pk = pk + 2*deltay;
+        x = x + 1;
+    else
+        pk = pk + 2*deltay-2*deltax;
+        x = x + 1;
+        y = y + 1;
+    end
+
+    hold on
+    plot(x,y,"*");
+    i = i + 1;
+
+end
+
+toc
+
+
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% LAB 4 CIRCLE
+
+
+
+%%%%%%%%%%%%%% QUAD
+
+x = input('enter value of X: ');
+y = input('enter value of Y: ');
+r = (max(x,y));Pk = 1  -r;
+
+check1 = 2*x +2;
+check2 = 2*y -2;%while y~=0%check1 ~= check2
+while y ~=  0
+    if Pk < 0
+        x = x+1;
+        Pk = Pk + 2*x +1;
+        check1 = 2*x +2;
+        check2 = 2*y -2;
+    else
+        x = x+1;
+        y = y-1;
+        Pk = Pk + (2*x) -(2*y);
+        check1 = 2*x +2;
+        check2 = 2*y -2;
+    end%disp(check1)%disp(check2)
+    % 
+hold on
+plot(x,y, '*')
+end
+hold off
+
+%%%%%%%%%%%%%% OctATE
+x = input('enter value of X: ');
+y = input('enter value of Y: ');
+r = (max(x,y));
+
+Pk = 1  -r;
+check1 = 2*x +2;
+check2 = 2*y -2;%while y~=0%check1 ~= check2
+while check1 ~=  check2
+    if Pk < 0
+        x = x+1;
+        Pk = Pk + 2*x +1;
+
+    else
+        x = x+1;
+        y = y-1;
+        Pk = Pk + (2*x) -(2*y);
+
+    end
+    check1 = 2 * x + 2;
+    check2 = 2 * y - 2;
+
+
+    hold on
+    plot(x,y, '*')
+ 
+end
+hold off
+
+
+%%%%%%%%%%%%%% circle without fill
+n = input('enter n: ');
+R =1;
+angle = 0:2*pi/n:2*pi;
+x1 = R*cos(angle);
+y1= R*sin(angle);
+x2 = R*cos(angle+2*pi/n);
+y2 = R*sin(angle+2*pi/n);
+line([x1 x2],[y1 y2]);
+axis equal;
+grid on;
+
+
+
+
+%%%%%%%%%%% circle  with fill
+n = input('enter n: ');
+R =1;
+angle = 0:2*pi/n:2*pi;
+x1 = R*cos(angle);
+y1= R*sin(angle);
+x2 = R*cos(angle+2*pi/n);
+y2 = R*sin(angle+2*pi/n);
+fill([x1 x2],[y1 y2],'b')
+line([x1 x2],[y1 y2]);
+axis equal;
+grid on;
+
+
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% LAB 5 ELIPSE
+
+c = [0,0] 
+a = [16,9]
+x = 0;
+y = a(2);
+p1= a(2)*a(2) - a(1)*a(1)*a(2) + 0.25*a(1)*a(1);
+p2 = a(2)*a(2)*(x + 0.5)*(x+0.5) + a(1)*a(1)*(y-1)*(y-1) -a(1)*a(1)*a(2)*a(2);
+while (a(2)*a(2)*x) < (a(1)*a(1)*y)
+ for i= -1:2:1
+    for j= -1:2:1
+         plot(c(1)+i*x,c(2)+j*y,'b.')
+         hold on
+    end
+ end
+ if(p1<0)
+    p1 = p1 + 2*a(2)*a(2)*x + 3*a(2)*a(2);
+    x = x+1;
+ else
+    p1 = p1 - 2*a(1)*a(1)*y + 2*a(2)*a(2)*x + 2*a(1)*a(1) + 3*a(2)*a(2);
+    x = x + 1;
+    y = y - 1;
+ end
+end
+while y > 0
+    for i= -1:2:1
+        for j= -1:2:1
+            plot(c(1)+i*x,c(2)+j*y,'r.');
+        end
+    end
+    if(p2 < 0)
+        p2 = p2 + 2*a(2)*a(2)*x - 2*a(1)*a(1)*y + 3*a(1)*a(1) + 2*a(2)*a(2);
+        x = x + 1;
+        y = y - 1;
+    else
+         p1 = p1 - 2*a(1)*a(1)*y + 3*a(1)*a(1);
+        y = y - 1;
+    end
+end
+grid on , axis square
+axis([c(1)-a(1)-5 c(1)+a(1)+5 c(2)-a(2)-5 c(2)+a(2)+5]);
+title('Generation of Ellipse by Midpoint Generation Algorithm')
+
+###################################################################### smol code for elipse
+% Input the semi-major axis
+a = 5;
+
+% Input the semi-minor axis
+b = 3;
+
+% Input the center of the ellipse
+h = 0;
+k = 0;
+
+% Define the parameters x and y
+t = linspace(0, 2*pi, 100);
+x = h + a*cos(t);
+y = k + b*sin(t);
+
+% Plot the ellipse
+hold on
+plot(x, y)
+xlabel('x')
+ylabel('y')
+axis equal
+
+
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% LAB 6        TRANSFORMATION
+
+image = "standard.jpg";
+i = imread(image);
+imageinfo("standard.jpg");
+
+
+
+gray_scale = rgb2gray(i);
+subplot(2,2,1)
+imshow(gray_scale)
+
+tobinary = im2bw(i);
+subplot(2,2,2)
+imshow(tobinary)
+
+rotatebazi = imrotate(i,90);
+subplot(2,2,3)
+imshow(rotatebazi)
+
+
+scalebazi = imresize(i,[2000,1000]);
+subplot(2,2,4)
+imshow(scalebazi)
+
+
+
+
+
+
+
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% LAB 7        TRANSFORMATION TRIANGKE BIG SMOL
+
+
+
+factor = [2, 3];
+A = [11 , 117];
+B = [68, 270];
+C = [126, 117];
+
+
+% Translation
+D = A + factor;
+E = B + factor;
+F = C + factor;
+
+hold on
+plot(A(1,1),A(1,2),"*");
+
+plot(B(1,1),B(1,2),"*");
+plot(C(1,1),C(1,2),"*");
+
+
+plot(D(1,1),D(1,2),"*");
+plot(E(1,1),E(1,2),"*");
+plot(F(1,1),F(1,2),"*");
+hold off
+
+
+
+
+
+
+
+
+
+
+
+
+
+factor = [ 10 0 0; 0 10 0 ;0 0 2 ];
+
+A = [11, 117, 50];
+B = [68, 270, 43];
+C = [126, 117, 7];
+
+
+D = A * factor;
+E = B * factor;
+F = C * factor;
+
+hold on
+
+plot3(A(1,1),A(1,2),A(1,3),"*")
+plot3(B(1,1),B(1,2),B(1,3),"*")
+plot3(C(1,1),C(1,2),C(1,3),"*")
+
+
+plot(D(1,1),D(1,2),"*")
+plot(E(1,1),E(1,2),"*")
+plot(F(1,1),F(1,2),"*")
+hold off
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% LAB 8  bzier curve midpoint triangle
+
+A = [0,0];
+B = [3,4];
+C = [5,0];
+
+hold on 
+plot(A(1,1),A(1,2),'*');
+plot(B(1,1),B(1,2),'*');
+plot(C(1,1),C(1,2),'*');
+
+plot([A(1) B(1)], [A(2) B(2)]);
+plot([B(1) C(1)], [B(2) C(2)]);
+plot([A(1) C(1)], [A(2) C(2)]);
+hold off
+
+
+
+
+
+
+
+
+
+A = [0 , 0];
+B = [5 , 0];
+C = [3 , 4];
+
+hold on 
+plot(A(1,1),A(1,2),"*");
+plot(B(1,1),B(1,2),"*");
+plot(C(1,1),C(1,2),"*");
+
+
+midpointac = [(A(1,1)+C(1,1)) /2 , (A(1,2)+C(1,2)) /2]
+
+midpointcb = [(B(1,1)+C(1,1)) /2 , (B(1,2)+C(1,2)) /2]
+
+middle = [(midpointac(1,1)+midpointcb(1,1)) /2 , (midpointac(1,2)+midpointcb(1,2)) /2]
+
+Amiddle = [(A(1,1)+midpointac(1,1)) /2 , (A(1,2)+midpointac(1,2)) /2]
+Bmiddle = [(B(1,1)+midpointcb(1,1)) /2 , (B(1,2)+midpointcb(1,2)) /2]
+
+
+plot(midpointac(1),midpointac(2),"*");
+
+plot(midpointcb(1),midpointcb(2),"*");
+
+plot(middle(1),middle(2),"*");
+
+plot(Amiddle(1),Amiddle(2),"*");
+
+plot(Bmiddle(1),Bmiddle(2),"*");
+
+
+plot([A(1) Amiddle(1)],[A(2) Amiddle(2)]);
+
+plot([Amiddle(1) middle(1)] , [Amiddle(2) middle(2)]);
+
+plot([middle(1) Bmiddle(1)] , [middle(2) Bmiddle(2)]);
+
+plot([B(1) Bmiddle(1)],[B(2) Bmiddle(2)]);
+
+
+
+hold off
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% LAB 9 Filters 
+
+% image = imread('pout.tif');
+% 
+% sharpen = imsharpen(image);
+% 
+% blurimage = imgaussfilt(image,20);
+% 
+% subplot(131),imshow(image), title('Original image')
+% subplot(132),imshow((blurimage),[]), title('Blurred image')
+% subplot(133),imshow((sharpen),[]), title('Sharpen image')
+
+
+leaf = imread('pout.tif');
+canny = edge(leaf,'Canny');
+sobel = edge(leaf,'Sobel');
+subplot(231),
+imshow(canny),
+title('Canny ')
+subplot(232),
+imshow((sobel),[]),
+title('Sobel')
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% LAB 11 histogram
+
+
+cmy = [255;255;255] -[153;204;255]
+
+
+
+
+
+
+
+
+
+img= imread('standard.jpg')
+gray=  rgb2gray(img)
+subplot(2,2,1)
+imshow(img)
+title('original image')
+subplot(2,2,2)
+histogram(img)
+subplot(2,2,3)
+imshow(gray)
+title('Gray image')
+subplot(2,2,4)
+histogram(gray)
+
+
+
+
+
+
+
+R = 153;G = 204; B = 255;
+x = [R G B];
+Q = acosd(1/2*(R-G)+(R-B)/((R-G)^2 + (R-B)*(G-B))^(1/2));
+if B<=G
+    H = Q;
+else
+    H = 360-Q;
+end
+S = 1-((3*(min(x))/(R+G+B)));
+I = 1/3*(R+G+B);
+RGB = [153; 204; 255];
+CMY = [255; 255; 255] -RGB;
+H
+S
+I
+CMY
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%5 BASIC COMMANDS
+img = imread('img')
+imshow (img) % to show image
+imageinfo('dingdong.png')
+
+gray = rgb2gray(i)
+bin = im2bw(i)
+
+subplot(131),imshow(i),title('normal')
+subplot(132),imshow(gray),title('grayscale')
+subplot(133),imshow(bin),title('binary')
+
+rot = imrotate(i,90)
+sca = imresize(i,[30,30])
+
+plot(A(1), A(2), '*')
+plot3(A(1), A(2), A(3),'*')
+
+plot([A(1), B(1)], [A(2), B(2)])
+
+
+a2b = [(A(1)+B(1))/2 , (A(2)+B(2))/2];
+
+canny = edge(gray,'canny')
+sobel = edge(gray,"sobel")
+
+required=given(:,1:2:5)'
+first=a(1:2, 1:2)
+scnd = a(2:3, 2:3)
+
+
